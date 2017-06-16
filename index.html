@@ -7,14 +7,13 @@
 <script>
 document.addEventListener('DOMContentLoaded',function(){
         document.getElementById('button').addEventListener('click',function(){
-            alert('ddd')
             if(! ('Notification' in window) ){
                 alert('Sorry bro, your browser is not good enough to display notification');
                 return;
             }   
             
             Notification.requestPermission(function(permission){
-                var notification = new Notification("Here I am!",{body:'Thanks for clicking that button. Hope you liked.',icon:'https://cdn2.iconfinder.com/data/icons/ios-7-style-metro-ui-icons/512/MetroUI_HTML5.png',dir:'auto'});
+                var notification = new Notification("hello world",{body:'欢迎来到我的网站',icon:'http://www.cloopen.jp/image/logo.png',dir:'auto'});
             });
         });
     });
