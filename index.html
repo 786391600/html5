@@ -3,12 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<title>弹窗</title>
+    <script src='jquery-3.1.0.js'></script>
 </head>
 <script>
-document.addEventListener('DOMContentLoaded',function(){
-        document.getElementById('button2').addEventListener('click',function(){
-            document.querySelector('.box').style.display='block';
-        })
+$(function(){
+    $('#button2').click(function(){
+        $('.box').show()
+    })
         document.getElementById('button').addEventListener('click',function(){
             if(! ('Notification' in window) ){
                 alert('Sorry bro, your browser is not good enough to display notification');
@@ -18,14 +19,13 @@ document.addEventListener('DOMContentLoaded',function(){
             Notification.requestPermission(function(permission){
                 var notification = new Notification("hello world",{body:'欢迎来到我的网站',icon:'http://www.cloopen.jp/image/logo.png',dir:'auto'});
                 notification.onshow=function(){
-                 document.querySelector('#button2').onclick;
+                 $('#button2').click()
                 }
             });
 
 
         });
-    
-    });
+})
 
 </script>
 <style>
