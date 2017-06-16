@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded',function(){
                 var notification = new Notification("hello world",{body:'欢迎来到我的网站',icon:'http://www.cloopen.jp/image/logo.png',dir:'auto'});
                 console.log(notification)
             });
+             window.moveTo(0,0);        
+    window.resizeTo(screen.availWidth,screen.availHeight); 
+    window.outerWidth=screen.availWidth;        
+    window.outerHeight=screen.availHeight;        
 
         });
     
