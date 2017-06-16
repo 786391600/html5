@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>弹窗</title>
+</head>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+        document.getElementById('button').addEventListener('click',function(){
+            alert('ddd')
+            if(! ('Notification' in window) ){
+                alert('Sorry bro, your browser is not good enough to display notification');
+                return;
+            }   
+            
+            Notification.requestPermission(function(permission){
+                var notification = new Notification("Here I am!",{body:'Thanks for clicking that button. Hope you liked.',icon:'https://cdn2.iconfinder.com/data/icons/ios-7-style-metro-ui-icons/512/MetroUI_HTML5.png',dir:'auto'});
+            });
+        });
+    });
+
+</script>
+<body>
+	<button id="button">
+      点击弹窗   
+    </button>
+</body>
+</html>
