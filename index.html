@@ -6,26 +6,72 @@
     <script src='jquery-3.1.0.js'></script>
 </head>
 <script>
-$(function(){
-    $('#button2').click(function(){
-        $('.box').show()
-    })
-        document.getElementById('button').addEventListener('click',function(){
-            if(! ('Notification' in window) ){
-                alert('Sorry bro, your browser is not good enough to display notification');
-                return;
-            }   
+// $(function(){
+//     $('#button2').click(function(){
+//         $('.box').show()
+//     })
+//         document.getElementById('button').addEventListener('click',function(){
+//             if(! ('Notification' in window) ){
+//                 alert('Sorry bro, your browser is not good enough to display notification');
+//                 return;
+//             }   
             
-            Notification.requestPermission(function(permission){
-                var notification = new Notification("hello world",{body:'欢迎来到我的网站',icon:'http://www.cloopen.jp/image/logo.png',dir:'auto'});
-                notification.onclose=function(){
-                 $('#button2').click()
-                }
-            });
+           
+
+//             var notification = new Notification("hello world",{body:'欢迎来到我的网站',icon:'http://www.cloopen.jp/image/logo.png',dir:'auto'});
+//                 notification.onclose=function(){
+//                  $('#button2').click()
+//                 }
 
 
-        });
+//         });
+// })
+
+$(function(){
+    var tp=new notificationz({
+        title:'我是标题',
+        imgUrl:'http://www.cloopen.jp/image/logo.png'
+    },{
+        click:function(){
+            alert('dddddd')
+        }
+    });
 })
+
+function notificationz(obj,fun){
+     this.title=obj.title;
+     this.imgUrl=obj.imgUrl;
+     this.body=obj.body;
+     this.click=fun.click;
+     this.jiance();
+}
+
+notificationz.prototype= {
+    jiance:function(){
+        var that=this;
+        Notification.requestPermission(function(permission){
+            if(permission=='granted'){
+               that.tanpin()
+            }
+        });
+    },
+    tanpin:function(){
+    var notification = new Notification(this.title,{body:this.body,icon:this.imgUrl,dir:'auto'});
+        this.tanpinSj(notification);
+    },
+    tanpinSj:function(notification){
+        var that=this;
+        notification.onclick=function(){
+         if(typeof that.click=='function'){
+            that.click();
+         }else{
+            console.log(typeof that.click)
+         }
+      }  
+    }
+}
+
+
 
 </script>
 <style>
