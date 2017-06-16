@@ -15,8 +15,9 @@ document.addEventListener('DOMContentLoaded',function(){
             Notification.requestPermission(function(permission){
                 var notification = new Notification("hello world",{body:'欢迎来到我的网站',icon:'http://www.cloopen.jp/image/logo.png',dir:'auto'});
             });
+                console.log(notification)
         });
-        console.log(Notification)
+    
     });
 
 </script>
