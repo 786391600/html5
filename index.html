@@ -36,8 +36,15 @@ $(function(){
             alert('dddddd')
         }
     });
-})
 
+ // var data=new Date();
+ // alert(data.valueOf())
+  // console.log(1000*Math.formatFloat(1-0.8,1))
+})
+Math.formatFloat = function(f, digit) { 
+    var m = Math.pow(10, digit); 
+    return parseInt(f * m, 10) / m; 
+} 
 function notificationz(obj,fun){
      this.title=obj.title;
      this.imgUrl=obj.imgUrl;

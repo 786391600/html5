@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<script>
+	window.onload=function(){
+		 var canvas=document.getElementById('canvas');
+		 var pal=new picTure(canvas);
+     pal.type='jiao'; 
+     pal.setStyle('yellow');
+	}
+
+	function picTure(can){
+         this.can=can;
+         this.context=this.can.getContext('2d');
+         this.imgData=[];
+         this.draw();
+	}
+	picTure.prototype={	
+        draw:function(){
+        	var that=this;
+        	var can=this.can;
+        	can.onmousedown=function(e){
+        		var x=e.offsetX;
+        		var y=e.offsetY;
+            if(that.type=='pen'){
+              that.context.beginPath();
+              that.context.moveTo(x,y);
+               }
+           
+        		can.onmousemove=function(e){
+             var dx=e.offsetX;
+             var dy=e.offsetY; 
+              that.context.clearRect(0,0,600,500);
+              if(that.imgData.length>0){
+              that.context.putImageData(that.imgData[that.imgData.length-1],0,0)  
+            }  
+            
+
+        		var xie=Math.sqrt(Math.pow((e.offsetX-x),2)+Math.pow((e.offsetY-y),2))
+            that.didong(x,y,xie,dx,dy);
+            
+        		}
+
+
+        	}
+        	can.onmouseup=function(){
+        		can.onmousemove=null;
+            var data=that.context.getImageData(0,0,600,500);
+            that.imgData.push(data);
+        	}
+        },
+        didong:function(x,y,xie,dx,dy){
+           var context=this.context;
+           eval('this.'+this.type+'('+x+','+y+','+xie+','+dx+','+dy+')');
+        },
+        setStyle:function(color){
+          this.context.strokeStyle =color;
+          this.context.lineWidth=5;
+        },
+        rect:function(x,y,xie){
+          var context=this.context;
+          context.beginPath();
+          context.rect(x,y,xie,xie);
+          context.stroke();
+          context.closePath()
+        },
+        arc:function(x,y,xie){
+           var context=this.context;
+           context.beginPath();
+           context.arc(x,y,xie,0,Math.PI*2,true);
+           context.stroke();
+           context.closePath();
+        },
+        pen:function(x,y,xie,dx,dy){
+           var context=this.context;
+           // context.lineTo(dx,dy);           
+           // context.stroke();
+        context.save();
+        context.lineCap="round";
+        context.lineTo(dx,dy);
+        context.stroke();
+        context.restore();
+           // context.closePath();
+        },
+        line:function(x,y,xie,dx,dy){
+          var context=this.context;
+          context.beginPath();
+          context.moveTo(x,y);
+          context.lineTo(dx,dy);
+          context.stroke();
+        },
+        jiao:function(x,y,xie,dx,dy){
+         var num=4;
+         var r=xie; 
+         var context=this.context;
+         context.beginPath();
+         var startX = x + r * Math.cos(2*Math.PI*0/num);
+         var startY = y + r * Math.sin(2*Math.PI*0/num);
+         context.moveTo(startX, startY);
+         for(var i = 1; i <= num; i++) {
+          var newX = x + r * Math.cos(2*Math.PI*i/num);
+          var newY = y + r * Math.sin(2*Math.PI*i/num);
+          context.lineTo(newX, newY);
+        }
+        context.closePath();
+        context.stroke();
+        }
+
+	}
+</script>
+<style>
+  body{
+    padding: 0;
+    margin: 0;
+  }
+  #canvas{
+    border:1px solid #ccc;
+    background: #ccc;
+  }
+</style>
+<body>
+	<canvas id='canvas' width='600' height='500'>
+		您的浏览器不支持canvas
+	</canvas>
+</body>
+</html>
