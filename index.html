@@ -28,19 +28,28 @@
 // })
 
 $(function(){
-    var tp=new notificationz({
-        title:'我是标题',
-        imgUrl:'http://www.cloopen.jp/image/logo.png'
-    },{
-        click:function(){
-            alert('dddddd')
-        }
-    });
+    // var tp=new notificationz({
+    //     title:'我是标题',
+    //     imgUrl:'http://www.cloopen.jp/image/logo.png'
+    // },{
+    //     click:function(){
+    //         alert('dddddd')
+    //     }
+    // });
 
  // var data=new Date();
  // alert(data.valueOf())
   // console.log(1000*Math.formatFloat(1-0.8,1))
+  $('.cc_event').on('wtclick',wtclick);
+  // $('.cc_event').trigger('wtclick')
+  $(document).click(function(){
+    $('.cc_event').trigger('wtclick')
+  })
+
 })
+function wtclick(){
+    alert('我的名字叫王涛')
+}
 Math.formatFloat = function(f, digit) { 
     var m = Math.pow(10, digit); 
     return parseInt(f * m, 10) / m; 
@@ -96,5 +105,6 @@ notificationz.prototype= {
     <div class="box" style='diaplay:none;width:300px;height:300px;background:red'>
         
     </div>
+    <div class="cc_event"></div>
 </body>
 </html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>img</title>
+</head>
+<script>
+  window.onload=function(){
+  	var img=document.getElementById('img');
+  	var can=document.getElementById('can');
+  	var context=can.getContext('2d');
+  	var ow=img.width;
+  	var oh=img.height;
+  	context.drawImage(img,0,0);
+  	var c=context.getImageData(0,0,ow,oh);
+
+  }
+</script>
+<style>
+	#can{
+		background:#C1FFC1;
+	}
+</style>
+<body>
+	<canvas id='can' width='600' height='500'>
+		
+	</canvas>
+	<img src="logo.png" alt="" id='img'>
+</body>
+</html>

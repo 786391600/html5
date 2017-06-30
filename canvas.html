@@ -8,8 +8,32 @@
 	window.onload=function(){
 		 var canvas=document.getElementById('canvas');
 		 var pal=new picTure(canvas);
-     pal.type='jiao'; 
+     pal.type='pen'; 
      pal.setStyle('yellow');
+     var canvas1=document.getElementById('canvas1');
+     var context=canvas1.getContext('2d');
+     var arr=[];
+      for(var i=0;i<20;i++){
+       arr.push(new yudi(canvas1));
+      }
+    function move(){
+     context.save();
+     context.beginPath();
+     context.fillStyle='rgba(0,0,0,0.2)';
+     context.rect(0,0,600,500);
+     context.fill();
+     context.restore();
+     for(var k=0;k<arr.length;k++){
+        if(arr[k].update()=='false'){
+           arr[k]=new yudi(canvas1);
+        }
+     }
+     setTimeout(function(){
+       move();
+     },30)
+    }
+    move();
+     
 	}
 
 	function picTure(can){
@@ -93,7 +117,7 @@
           context.stroke();
         },
         jiao:function(x,y,xie,dx,dy){
-         var num=4;
+         var num=10;
          var r=xie; 
          var context=this.context;
          context.beginPath();
@@ -110,6 +134,69 @@
         }
 
 	}
+
+  function yudi(canvas){
+      this.context=canvas.getContext('2d');
+      this.speed=parseInt(Math.random()*5+5);
+      this.ld=parseInt(Math.random()*50+400);
+      this.init();
+      this.x=parseInt(Math.random()*600);
+      this.y=0;
+      this.draw();
+      this.update();
+      this.r=1;
+  }
+  yudi.prototype={
+      init:function(){
+        this.context.strokeStyle='#8DEEEE';
+        this.context.fillStyle='#8DEEEE';
+      },
+      draw:function(){
+         var context=this.context;
+         context.beginPath();
+         context.rect(this.x,this.y,2,10);
+         context.fill();
+      },
+      xialuo:function(){
+         var context=this.context;
+         var oY=0;
+         var oX=0;
+         context.translate(oX,oY++);
+      },
+      update:function(){
+        if(this.y>=this.ld){
+          // arr[k]=null;
+          // console.log(typeof arr[k]);
+          // this.context.clearRect(this.x,0,2,this.y+10);
+          this.ronghuaUp();
+          return this.ronghuaUp();
+        }
+        // this.context.clearRect(this.x,this.y-10,10,10);
+        // this.context.save();
+        // this.context.beginPath();
+        // this.context.fillStyle='rgba(0,0,0,0.3)';
+        // this.context.rect(this.x,0,2,this.y);
+        // this.context.fill();
+        // this.context.restore();
+        this.y+=this.speed;
+        this.draw();
+        var that=this;
+        // setTimeout(function(){
+        //   that.update(arr,k);
+        // },30)
+      },
+      ronghuaUp:function(){
+        if(this.r>=30){
+          return 'false';
+        }
+        var context=this.context;
+        context.beginPath();
+        this.r+=1.5;
+        context.arc(this.x,this.y,this.r,0,Math.PI*2,true);
+        context.stroke();
+        var that=this;
+      }
+  }
 </script>
 <style>
   body{
@@ -120,10 +207,17 @@
     border:1px solid #ccc;
     background: #ccc;
   }
+  #canvas1{
+    border: 1px solid blue;
+    background: black;
+  }
 </style>
 <body>
 	<canvas id='canvas' width='600' height='500'>
 		您的浏览器不支持canvas
 	</canvas>
+  <canvas id='canvas1' width='600' height='500'>
+    您的浏览器不支持canvas
+  </canvas>
 </body>
 </html>
